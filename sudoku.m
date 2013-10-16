@@ -1,3 +1,8 @@
+% Reference: This file is based on the mercury code provided on LMS. 
+% The orignal file is named sudoku_starter.m 
+% Another file- grouping.m on LMS is also used to develop this project.
+
+
 % Instructions:  start by renaming this file to sudoku.m.
 % Feel free to remove any code you don't need, and modify any code to
 % suit your needs.  But remember to PROMINENTLY INDICATE ANY CODE FROM
@@ -10,7 +15,7 @@
 
 :- module sudoku.
 :- interface.
-:- import_module io.
+:- import_module io,list,set,grouping.
 :- pred main(io::di, io::uo) is det.	% change det to cc_multi if
 					% you use nondeterminism
 
@@ -114,6 +119,70 @@ load_puzzle(Puzzle, !IO) :-
 	    ),
 	    load_puzzle(Puzzle1, !IO)
 	).
+
+:- type cell ---> cell (index::int, value::int)
+%  Defined a cell type, it has two fields, index in the Puzzle list, and the value (1-9).
+
+
+:- pred solve_puzzle (list(int)::in, list(int)::out) is det
+
+% Solve a puzzle, the puzzle is a list of filled and unfilled cells.
+% Return a list with cells that are all filled.
+
+solve_puzzle (Puzzle,SolvedPuzzle) :- 
+      ( % group_list(1,2,3,Puzzle,GroupedPuzzle), % FIX ME: Change the parameters of group_list
+        % findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
+        % Succeed = 1
+          -> solve_puzzle (Puzzle,ProcessedPuzzle)
+          % Hard sudoku questions, have to make a guess first.
+          ; get_cell_withFewestPossibleValue(ProcessedPuzzle,LuckyCell),
+            get_aPossibleValue_ofCell(ProcessedPuzzle,LuckyCell,Value),
+            UpdatedCell = LuckCell ^ value := Value,
+            ungroup_list(1,2,3,Puzzle1,ProcessedPuzzle),
+            % FIX ME: update the Puzzle1 list at cell.index with cell.value.
+            % Applying the simple strategy on this updated puzzle-Puzzle2.
+
+            % Recusive call to solve_puzzle or use backtracking
+            % FIX ME: NOTE: the back tracking stuff would happen at here.
+            %% solve_puzzle(Puzzle2,SolvedPuzzle),
+            findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
+	        Succeed = 1
+	        -> solve_puzzle (Puzzle,ProcessedPuzzle)
+	        ; false % explicitly failing.
+       ).
+
+:- pred findAndUpdate_cells_haveOnePossibleValue(list(list(int))::in, listlist((int))::out,int::out) is det
+
+%  Try to find and update all the cells who could have only one possible value.
+%  If found a cell, then the value field of the cell will be udpated, otherwise not.
+%  The last out parameter indicates whether updated all the cells or not. 0 means no. 1 mean yes.
+
+findAndUpdate_cells_haveOnePossibleValue(Puzzle,UpdatedPuzzle,Succeed) :-
+                             
+                           
+
+:- pred find_allPossibleValues_ofCell (list(list(int))::in,cell::in,list(int)::out) is det
+
+%  Find all possible values that an unfilled cell could have. Call itself recursively.
+
+find_allPossibleValues_ofCell(Puzzle,UnfilledCell, PossibleValues) :-
+        %
+
+
+:- pred get_aPossibleValue_ofCell (list(list(int))::in,cell::in,int::out) is multi
+
+%  Return a possible value of an unfilled cell.
+%  Could be used to get a reasonable guess.     
+%  Update the value of the cell from -1 to another value.
+
+get_aPossibleValue_ofCell(Puzzle,UnfilledCell,A_PossibleValue) :- 
+        %
+ 
+:- pred get_cell_withFewestPossibleValue (list(list(int))::in, cell::out ) is det
+
+% Find out a cell with fewest possible alternative values
+
+get_cell_withFewestPossibleValue(Puzzle,LuckyCell) :- 
 
 
 
