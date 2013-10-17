@@ -1,6 +1,6 @@
-% Reference: This file is based on the mercury code provided on LMS. 
+% Reference: This program is developed based on the mercury code provided on LMS. 
 % The orignal file is named sudoku_starter.m 
-% Another file- grouping.m on LMS is also used to develop this project.
+% Another file- grouping.m on LMS is also used to develop this program.
 
 
 % Instructions:  start by renaming this file to sudoku.m.
@@ -130,59 +130,135 @@ load_puzzle(Puzzle, !IO) :-
 % Return a list with cells that are all filled.
 
 solve_puzzle (Puzzle,SolvedPuzzle) :- 
-      ( % group_list(1,2,3,Puzzle,GroupedPuzzle), % FIX ME: Change the parameters of group_list
-        % findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
-        % Succeed = 1
+      (  
+         findAndUpdate_cells_haveOnePossibleValue(Puzzle,ProcessedPuzzle,Succeed),
+         Succeed = 1
           -> solve_puzzle (Puzzle,ProcessedPuzzle)
           % Hard sudoku questions, have to make a guess first.
-          ; get_cell_withFewestPossibleValue(ProcessedPuzzle,LuckyCell),
-            get_aPossibleValue_ofCell(ProcessedPuzzle,LuckyCell,Value),
-            UpdatedCell = LuckCell ^ value := Value,
-            ungroup_list(1,2,3,Puzzle1,ProcessedPuzzle),
+          ; false
+
+            %%%%%%%%%%%%%%%%%% Stage 2 
+            %get_cell_withFewestPossibleValue(ProcessedPuzzle,LuckyCell),
+            %get_aPossibleValue_ofCell(ProcessedPuzzle,LuckyCell,Value),
+            %UpdatedCell = LuckCell ^ value := Value,
+            %ungroup_list(1,2,3,Puzzle1,ProcessedPuzzle),
             % FIX ME: update the Puzzle1 list at cell.index with cell.value.
             % Applying the simple strategy on this updated puzzle-Puzzle2.
 
             % Recusive call to solve_puzzle or use backtracking
             % FIX ME: NOTE: the back tracking stuff would happen at here.
             %% solve_puzzle(Puzzle2,SolvedPuzzle),
-            findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
-	        Succeed = 1
-	        -> solve_puzzle (Puzzle,ProcessedPuzzle)
-	        ; false % explicitly failing.
+            %findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
+	        %Succeed = 1
+	        %-> solve_puzzle (Puzzle,ProcessedPuzzle)
+	        %; false % explicitly failing.
        ).
 
-:- pred findAndUpdate_cells_haveOnePossibleValue(list(list(int))::in, listlist((int))::out,int::out) is det
+:- pred findAndUpdate_cells_haveOnePossibleValue(list(int)::in, list(int)::out,int::out) is det
 
-%  Try to find and update all the cells who could have only one possible value.
+%  Try to find and update all the cells who could have only one possible value, 
+%  Update that cell and do this recursively until no cells could be updated.
 %  If found a cell, then the value field of the cell will be udpated, otherwise not.
 %  The last out parameter indicates whether updated all the cells or not. 0 means no. 1 mean yes.
 
 findAndUpdate_cells_haveOnePossibleValue(Puzzle,UpdatedPuzzle,Succeed) :-
-                             
+                                      
                            
 
-:- pred find_allPossibleValues_ofCell (list(list(int))::in,cell::in,list(int)::out) is det
+:- pred find_allPossibleValues_ofCell (list(int)::in,cell::in,list(int)::out) is det
 
 %  Find all possible values that an unfilled cell could have. Call itself recursively.
 
-find_allPossibleValues_ofCell(Puzzle,UnfilledCell, PossibleValues) :-
+%find_allPossibleValues_ofCell(Puzzle,UnfilledCell, PossibleValues) :-
         %
 
 
-:- pred get_aPossibleValue_ofCell (list(list(int))::in,cell::in,int::out) is multi
+:- pred get_aPossibleValue_ofCell (list(int)::in,cell::in,int::out) is multi
 
 %  Return a possible value of an unfilled cell.
 %  Could be used to get a reasonable guess.     
 %  Update the value of the cell from -1 to another value.
 
-get_aPossibleValue_ofCell(Puzzle,UnfilledCell,A_PossibleValue) :- 
+%get_aPossibleValue_ofCell(Puzzle,UnfilledCell,A_PossibleValue) :- 
         %
  
 :- pred get_cell_withFewestPossibleValue (list(list(int))::in, cell::out ) is det
 
 % Find out a cell with fewest possible alternative values
 
-get_cell_withFewestPossibleValue(Puzzle,LuckyCell) :- 
+%get_cell_withFewestPossibleValue(Puzzle,LuckyCell) :- 
+
+
+
+
+:- pred return_row_collum_countryOfACell (list(int)::in,int:in,list(int)::out,list(int)::out,list(int)::out)
+
+% Given the Puzzle and index of the unfilled cell, return the number on the row, collum and country.
+
+return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country) :- 
+            ( 
+              grouping (0,9,9,Puzzle,RowList),
+              grouping (8,9,9,Puzzle,CollumList),
+              grouping (0,3,3,Puzzle,CountryList),  
+
+              %Return row collum country based on Index
+              Index div 9  = RowIndex, 
+              Index mod 9  = CollumIndex,
+              if 
+                  RowIndex =< 2      
+              then    
+                  (
+                     if
+                        CollumIndex =< 2
+                     then
+                        CountryIndex = 0
+                     else if
+                        CollumIndex =< 5
+                     then
+                        CountryIndex = 1
+                     else
+                        CountryIndex = 2
+                  )   
+              else if
+                  RowIndex =< 5 
+              then
+                  (
+                     if
+                        CollumIndex =< 2
+                     then
+                        CountryIndex = 3              
+                     else if
+                        CollumIndex =< 5
+                     then
+                        CountryIndex = 4
+                     else
+                        CountryIndex = 5
+                  )
+              else 
+                  (
+                     if
+                        CollumIndex =< 2
+                     then
+                        CountryIndex = 6              
+                     else if
+                        CollumIndex =< 5
+                     then
+                        CountryIndex = 7
+                     else
+                        CountryIndex = 8
+                  )
+
+              % Remove unfilled cells which are indicated by -1. 
+             list.index0(RowList,RowIndex,TempRow),
+             list.index0(CollumList,CollumIndex,TempCollum),
+             list.index0(CountryList,CountryIndex,TempCountry),
+             list.delete_all(TempRow,-1,Row),
+             list.delete_all(TempCollum,-1,Collum),
+             list.delete_all(TempCountry,-1,Country),              
+              
+              return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country)
+            ).
+            
 
 
 
