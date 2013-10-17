@@ -191,7 +191,7 @@ findAndUpdate_cells_haveOnePossibleValue(Puzzle,UpdatedPuzzle,Succeed) :-
 
 
 
-:- pred return_row_collum_countryOfACell (list(int)::in,int:in,list(int)::out,list(int)::out,list(int)::out)
+:- pred return_row_collum_countryOfACell (list(int)::in,int:in,list(int)::out,list(int)::out,list(int)::out) is det
 
 % Given the Puzzle and index of the unfilled cell, return the number on the row, collum and country.
 
@@ -248,15 +248,16 @@ return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country) :-
                         CountryIndex = 8
                   )
 
-              % Remove unfilled cells which are indicated by -1. 
+             % Get the specific row, collum and country from the list of list(int).
              list.index0(RowList,RowIndex,TempRow),
              list.index0(CollumList,CollumIndex,TempCollum),
              list.index0(CountryList,CountryIndex,TempCountry),
+             % Remove unfilled cells which are indicated by -1. 
              list.delete_all(TempRow,-1,Row),
              list.delete_all(TempCollum,-1,Collum),
              list.delete_all(TempCountry,-1,Country),              
               
-              return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country)
+             return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country)
             ).
             
 
