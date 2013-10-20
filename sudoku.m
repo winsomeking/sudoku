@@ -131,7 +131,7 @@ load_puzzle(Puzzle, !IO) :-
 
 solve_puzzle (Puzzle,SolvedPuzzle) :- 
       (  
-         findAndUpdate_cells_haveOnePossibleValue(Puzzle,ProcessedPuzzle,Succeed),
+         findAndUpdate_cells_haveOnePossibleValue(0,Puzzle,ProcessedPuzzle,Succeed),
          Succeed = 1
           -> solve_puzzle (Puzzle,ProcessedPuzzle)
           % Hard sudoku questions, have to make a guess first.
@@ -154,23 +154,62 @@ solve_puzzle (Puzzle,SolvedPuzzle) :-
 	        %; false % explicitly failing.
        ).
 
-:- pred findAndUpdate_cells_haveOnePossibleValue(list(int)::in, list(int)::out,int::out) is det
+:- pred findAndUpdate_cells_haveOnePossibleValue(int::in,list(int)::in, list(int)::out,int::out) is det
 
-%  Try to find and update all the cells who could have only one possible value, 
+%  Try to find and update all the cells from index 0 in the puzzle list who could have only one possible value, 
 %  Update that cell and do this recursively until no cells could be updated.
 %  If found a cell, then the value field of the cell will be udpated, otherwise not.
 %  The last out parameter indicates whether updated all the cells or not. 0 means no. 1 mean yes.
 
-findAndUpdate_cells_haveOnePossibleValue(Puzzle,UpdatedPuzzle,Succeed) :-
-                                      
+findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle,Succeed) :-
+      (  list.length(Puzzle,PuzzleLen),
+         CellIndex >= PuzzleLen
+         -> (   list.contains(Puzzle,-1) 
+                ->  findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle,0)
+                ; findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle,1)
+            )
+         ;
+         find_allPossibleValues_ofCell(Puzzle,cell(CellIndex,_), PossibleValues),
+         list.length(PossibleValues,Len),
+         Len = 1
+         -> ( list.take(1,PossibleValues,Head),
+              list.replace_nth(Puzzle,CellIndex+1,Head,UpdatedPuzzle)
+            )
+         ;  UpdatePuzzle = Puzzle,
+         findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,UpdatedPuzzle,UpdatedPuzzle1,Succeed) 
+       ).                               
                            
 
 :- pred find_allPossibleValues_ofCell (list(int)::in,cell::in,list(int)::out) is det
 
 %  Find all possible values that an unfilled cell could have. Call itself recursively.
 
-%find_allPossibleValues_ofCell(Puzzle,UnfilledCell, PossibleValues) :-
-        %
+find_allPossibleValues_ofCell(Puzzle,UnfilledCell, PossibleValues) :-
+    (    return_row_collum_countryOfACell(Puzzle,UnfilledCell^index, RowValues,CollumValues,CountryValues),
+         list.append(RowValues,CollumValues,TempList),
+         list.append(TempList,CountryValues,TempList2),
+         list.remove_dups(TempList2,UsedValueList),
+         removeUsedValues(1,UsedValueList,PossibleValues),
+         find_allPossibleValues_ofCell(Puzzle,UnfilledCell,PossibleValues)
+     ).  
+
+:- pred removeUsedValues (int::in,list(int)::in,list(int)::out) is det
+%  Remove used values in row, collum and the country. Input is all the values used.
+%  Output is the difference of [1-9] and input list.
+%  Initial value of Value must be 1.
+removeUsedValues (Value, InputList, OutputList) :- 
+      (  
+          Value > 9
+          -> removeUsedValues(Value,InputList,OutputList) 
+         ;
+          ( 
+           list.contains(InputList,Value) 
+           -> OutputList1 = OutputList 
+           ; OutputList1 = [Value|OutputList],
+           removeUsedValues(Value+1,InputList,OutputList1)
+          )
+      ).
+
 
 
 :- pred get_aPossibleValue_ofCell (list(int)::in,cell::in,int::out) is multi
@@ -191,7 +230,7 @@ findAndUpdate_cells_haveOnePossibleValue(Puzzle,UpdatedPuzzle,Succeed) :-
 
 
 
-:- pred return_row_collum_countryOfACell (list(int)::in,int:in,list(int)::out,list(int)::out,list(int)::out) is det
+:- pred return_row_collum_countryOfACell (list(int)::in,int:in,list(int)::out,list(int)::out,list(int)::out)
 
 % Given the Puzzle and index of the unfilled cell, return the number on the row, collum and country.
 
@@ -248,16 +287,15 @@ return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country) :-
                         CountryIndex = 8
                   )
 
-             % Get the specific row, collum and country from the list of list(int).
+              % Remove unfilled cells which are indicated by -1. 
              list.index0(RowList,RowIndex,TempRow),
              list.index0(CollumList,CollumIndex,TempCollum),
              list.index0(CountryList,CountryIndex,TempCountry),
-             % Remove unfilled cells which are indicated by -1. 
              list.delete_all(TempRow,-1,Row),
              list.delete_all(TempCollum,-1,Collum),
              list.delete_all(TempCountry,-1,Country),              
               
-             return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country)
+              return_row_collum_countryOfACell (Puzzle,Index,Row,Collum,Country)
             ).
             
 
