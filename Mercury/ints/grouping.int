@@ -1,0 +1,7 @@
+:- module grouping.
+:- interface.
+:- import_module list.
+:- pred group_list(int, int, int, list.list(E), list.list(list.list(E))).
+:- mode group_list((builtin.in), (builtin.in), (builtin.in), (builtin.in), (builtin.out)) is det.
+:- pred ungroup_list(int, int, int, list.list(E), list.list(list.list(E))).
+:- mode ungroup_list((builtin.in), (builtin.in), (builtin.in), (builtin.out), (builtin.in)) is det.

@@ -37,9 +37,6 @@ extern "C" {
 
 
 
-#line 41 "Mercury/mihs/sudoku.mih.tmp"
-extern const MR_TypeCtorInfo_Struct sudoku__sudoku__type_ctor_info_cell_0;
-
 #line 19 "sudoku.m"
 void MR_CALL 
 main_2_p_0(void);

@@ -1,0 +1,82 @@
+/*
+** Automatically generated from `grouping.m'
+** by the Mercury compiler,
+** version rotd-2013-10-01, configured for x86_64-apple-darwin12.5.0.
+** Do not edit.
+**
+** The autoconfigured grade settings governing
+** the generation of this C file were
+**
+** TAG_BITS=3
+** UNBOXED_FLOAT=yes
+** PREGENERATED_DIST=no
+** HIGHLEVEL_CODE=yes
+**
+** END_OF_C_GRADE_INFO
+*/
+
+
+/* :- module grouping. */
+/* :- interface. */
+
+#ifndef MR_HEADER_GUARD_grouping
+#define MR_HEADER_GUARD_grouping
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "mercury.h"
+
+
+#ifndef GROUPING_DECL_GUARD
+#define GROUPING_DECL_GUARD
+
+#endif
+
+
+
+
+#line 14 "grouping.m"
+void MR_CALL 
+grouping__ungroup_list_5_p_0(
+#line 14 "grouping.m"
+  MR_Word grouping__param_1,
+#line 14 "grouping.m"
+  MR_Integer grouping__param_2,
+#line 14 "grouping.m"
+  MR_Integer grouping__param_3,
+#line 14 "grouping.m"
+  MR_Integer grouping__param_4,
+#line 14 "grouping.m"
+  MR_Word * grouping__param_5,
+#line 14 "grouping.m"
+  MR_Word grouping__param_6);
+
+#line 11 "grouping.m"
+void MR_CALL 
+grouping__group_list_5_p_0(
+#line 11 "grouping.m"
+  MR_Word grouping__param_1,
+#line 11 "grouping.m"
+  MR_Integer grouping__param_2,
+#line 11 "grouping.m"
+  MR_Integer grouping__param_3,
+#line 11 "grouping.m"
+  MR_Integer grouping__param_4,
+#line 11 "grouping.m"
+  MR_Word grouping__param_5,
+#line 11 "grouping.m"
+  MR_Word * grouping__param_6);
+
+void mercury__grouping__init(void);
+void mercury__grouping__init_type_tables(void);
+void mercury__grouping__init_debugger(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* MR_HEADER_GUARD_grouping */
+
+/* :- end_interface grouping. */

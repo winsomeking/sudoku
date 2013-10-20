@@ -4,8 +4,7 @@
 ** Grade: hlc.gc
 ** Input files:
 **
-** Mercury/cs/grouping.c
-** Mercury/cs/sudoku.c
+** sudoku.c
 ** /usr/local/mercury-rotd-2013-10-01/lib/mercury/modules/hlc.gc/mer_rt.init
 ** /usr/local/mercury-rotd-2013-10-01/lib/mercury/modules/hlc.gc/mer_std.init
 */
@@ -42,8 +41,6 @@ static void init_gc(void)
 
 static void init_modules_0(void)
 {
-	{ extern void mercury__grouping__init(void);
-	  mercury__grouping__init(); }
 	{ extern void mercury__sudoku__init(void);
 	  mercury__sudoku__init(); }
 	{ extern void mercury__array__init(void);
@@ -122,12 +119,12 @@ static void init_modules_0(void)
 	  mercury__io__init(); }
 	{ extern void mercury__lazy__init(void);
 	  mercury__lazy__init(); }
+	{ extern void mercury__lexer__init(void);
+	  mercury__lexer__init(); }
 }
 
 static void init_modules_1(void)
 {
-	{ extern void mercury__lexer__init(void);
-	  mercury__lexer__init(); }
 	{ extern void mercury__library__init(void);
 	  mercury__library__init(); }
 	{ extern void mercury__list__init(void);
@@ -206,12 +203,12 @@ static void init_modules_1(void)
 	  mercury__std_util__init(); }
 	{ extern void mercury__stm_builtin__init(void);
 	  mercury__stm_builtin__init(); }
+	{ extern void mercury__store__init(void);
+	  mercury__store__init(); }
 }
 
 static void init_modules_2(void)
 {
-	{ extern void mercury__store__init(void);
-	  mercury__store__init(); }
 	{ extern void mercury__stream__init(void);
 	  mercury__stream__init(); }
 	{ extern void mercury__stream__string_writer__init(void);
@@ -290,12 +287,12 @@ static void init_modules_2(void)
 	  mercury_sys_init_wrapper_init(); }
 	{ extern void mercury_sys_init_backjumps_init(void);
 	  mercury_sys_init_backjumps_init(); }
+	{ extern void mercury_sys_init_exceptions_init(void);
+	  mercury_sys_init_exceptions_init(); }
 }
 
 static void init_modules_3(void)
 {
-	{ extern void mercury_sys_init_exceptions_init(void);
-	  mercury_sys_init_exceptions_init(); }
 	{ extern void mercury_sys_init_par_builtin_modules_init(void);
 	  mercury_sys_init_par_builtin_modules_init(); }
 	{ extern void mercury_sys_init_lc_init(void);
@@ -323,8 +320,6 @@ static void init_modules(void)
 
 static void init_modules_type_tables_0(void)
 {
-	{ extern void mercury__grouping__init_type_tables(void);
-	  mercury__grouping__init_type_tables(); }
 	{ extern void mercury__sudoku__init_type_tables(void);
 	  mercury__sudoku__init_type_tables(); }
 	{ extern void mercury__array__init_type_tables(void);
@@ -403,12 +398,12 @@ static void init_modules_type_tables_0(void)
 	  mercury__io__init_type_tables(); }
 	{ extern void mercury__lazy__init_type_tables(void);
 	  mercury__lazy__init_type_tables(); }
+	{ extern void mercury__lexer__init_type_tables(void);
+	  mercury__lexer__init_type_tables(); }
 }
 
 static void init_modules_type_tables_1(void)
 {
-	{ extern void mercury__lexer__init_type_tables(void);
-	  mercury__lexer__init_type_tables(); }
 	{ extern void mercury__library__init_type_tables(void);
 	  mercury__library__init_type_tables(); }
 	{ extern void mercury__list__init_type_tables(void);
@@ -487,12 +482,12 @@ static void init_modules_type_tables_1(void)
 	  mercury__std_util__init_type_tables(); }
 	{ extern void mercury__stm_builtin__init_type_tables(void);
 	  mercury__stm_builtin__init_type_tables(); }
+	{ extern void mercury__store__init_type_tables(void);
+	  mercury__store__init_type_tables(); }
 }
 
 static void init_modules_type_tables_2(void)
 {
-	{ extern void mercury__store__init_type_tables(void);
-	  mercury__store__init_type_tables(); }
 	{ extern void mercury__stream__init_type_tables(void);
 	  mercury__stream__init_type_tables(); }
 	{ extern void mercury__stream__string_writer__init_type_tables(void);
@@ -571,12 +566,12 @@ static void init_modules_type_tables_2(void)
 	  mercury_sys_init_wrapper_init_type_tables(); }
 	{ extern void mercury_sys_init_backjumps_init_type_tables(void);
 	  mercury_sys_init_backjumps_init_type_tables(); }
+	{ extern void mercury_sys_init_exceptions_init_type_tables(void);
+	  mercury_sys_init_exceptions_init_type_tables(); }
 }
 
 static void init_modules_type_tables_3(void)
 {
-	{ extern void mercury_sys_init_exceptions_init_type_tables(void);
-	  mercury_sys_init_exceptions_init_type_tables(); }
 	{ extern void mercury_sys_init_par_builtin_modules_init_type_tables(void);
 	  mercury_sys_init_par_builtin_modules_init_type_tables(); }
 	{ extern void mercury_sys_init_lc_init_type_tables(void);
@@ -602,8 +597,6 @@ static void init_modules_type_tables(void)
 
 static void init_modules_debugger_0(void)
 {
-	{ extern void mercury__grouping__init_debugger(void);
-	  mercury__grouping__init_debugger(); }
 	{ extern void mercury__sudoku__init_debugger(void);
 	  mercury__sudoku__init_debugger(); }
 	{ extern void mercury__array__init_debugger(void);
@@ -682,12 +675,12 @@ static void init_modules_debugger_0(void)
 	  mercury__io__init_debugger(); }
 	{ extern void mercury__lazy__init_debugger(void);
 	  mercury__lazy__init_debugger(); }
+	{ extern void mercury__lexer__init_debugger(void);
+	  mercury__lexer__init_debugger(); }
 }
 
 static void init_modules_debugger_1(void)
 {
-	{ extern void mercury__lexer__init_debugger(void);
-	  mercury__lexer__init_debugger(); }
 	{ extern void mercury__library__init_debugger(void);
 	  mercury__library__init_debugger(); }
 	{ extern void mercury__list__init_debugger(void);
@@ -766,12 +759,12 @@ static void init_modules_debugger_1(void)
 	  mercury__std_util__init_debugger(); }
 	{ extern void mercury__stm_builtin__init_debugger(void);
 	  mercury__stm_builtin__init_debugger(); }
+	{ extern void mercury__store__init_debugger(void);
+	  mercury__store__init_debugger(); }
 }
 
 static void init_modules_debugger_2(void)
 {
-	{ extern void mercury__store__init_debugger(void);
-	  mercury__store__init_debugger(); }
 	{ extern void mercury__stream__init_debugger(void);
 	  mercury__stream__init_debugger(); }
 	{ extern void mercury__stream__string_writer__init_debugger(void);
@@ -844,8 +837,6 @@ static void init_modules_debugger(void)
 
 static void init_modules_complexity_procs_0(void)
 {
-	{ extern void mercury__grouping__init_complexity_procs(void);
-	  mercury__grouping__init_complexity_procs(); }
 	{ extern void mercury__sudoku__init_complexity_procs(void);
 	  mercury__sudoku__init_complexity_procs(); }
 	{ extern void mercury__array__init_complexity_procs(void);
@@ -924,12 +915,12 @@ static void init_modules_complexity_procs_0(void)
 	  mercury__io__init_complexity_procs(); }
 	{ extern void mercury__lazy__init_complexity_procs(void);
 	  mercury__lazy__init_complexity_procs(); }
+	{ extern void mercury__lexer__init_complexity_procs(void);
+	  mercury__lexer__init_complexity_procs(); }
 }
 
 static void init_modules_complexity_procs_1(void)
 {
-	{ extern void mercury__lexer__init_complexity_procs(void);
-	  mercury__lexer__init_complexity_procs(); }
 	{ extern void mercury__library__init_complexity_procs(void);
 	  mercury__library__init_complexity_procs(); }
 	{ extern void mercury__list__init_complexity_procs(void);
@@ -1008,12 +999,12 @@ static void init_modules_complexity_procs_1(void)
 	  mercury__std_util__init_complexity_procs(); }
 	{ extern void mercury__stm_builtin__init_complexity_procs(void);
 	  mercury__stm_builtin__init_complexity_procs(); }
+	{ extern void mercury__store__init_complexity_procs(void);
+	  mercury__store__init_complexity_procs(); }
 }
 
 static void init_modules_complexity_procs_2(void)
 {
-	{ extern void mercury__store__init_complexity_procs(void);
-	  mercury__store__init_complexity_procs(); }
 	{ extern void mercury__stream__init_complexity_procs(void);
 	  mercury__stream__init_complexity_procs(); }
 	{ extern void mercury__stream__string_writer__init_complexity_procs(void);
@@ -1088,8 +1079,6 @@ static void init_modules_complexity_procs(void)
 
 static void write_out_proc_statics_0(FILE *deep_fp, FILE *procrep_fp)
 {
-	{ extern void mercury__grouping__write_out_proc_statics(FILE *, FILE *);
-	  mercury__grouping__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__sudoku__write_out_proc_statics(FILE *, FILE *);
 	  mercury__sudoku__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__array__write_out_proc_statics(FILE *, FILE *);
@@ -1168,12 +1157,12 @@ static void write_out_proc_statics_0(FILE *deep_fp, FILE *procrep_fp)
 	  mercury__io__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__lazy__write_out_proc_statics(FILE *, FILE *);
 	  mercury__lazy__write_out_proc_statics(deep_fp, procrep_fp); }
+	{ extern void mercury__lexer__write_out_proc_statics(FILE *, FILE *);
+	  mercury__lexer__write_out_proc_statics(deep_fp, procrep_fp); }
 }
 
 static void write_out_proc_statics_1(FILE *deep_fp, FILE *procrep_fp)
 {
-	{ extern void mercury__lexer__write_out_proc_statics(FILE *, FILE *);
-	  mercury__lexer__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__library__write_out_proc_statics(FILE *, FILE *);
 	  mercury__library__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__list__write_out_proc_statics(FILE *, FILE *);
@@ -1252,12 +1241,12 @@ static void write_out_proc_statics_1(FILE *deep_fp, FILE *procrep_fp)
 	  mercury__std_util__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__stm_builtin__write_out_proc_statics(FILE *, FILE *);
 	  mercury__stm_builtin__write_out_proc_statics(deep_fp, procrep_fp); }
+	{ extern void mercury__store__write_out_proc_statics(FILE *, FILE *);
+	  mercury__store__write_out_proc_statics(deep_fp, procrep_fp); }
 }
 
 static void write_out_proc_statics_2(FILE *deep_fp, FILE *procrep_fp)
 {
-	{ extern void mercury__store__write_out_proc_statics(FILE *, FILE *);
-	  mercury__store__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__stream__write_out_proc_statics(FILE *, FILE *);
 	  mercury__stream__write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury__stream__string_writer__write_out_proc_statics(FILE *, FILE *);
@@ -1336,12 +1325,12 @@ static void write_out_proc_statics_2(FILE *deep_fp, FILE *procrep_fp)
 	  mercury_sys_init_wrapper_write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury_sys_init_backjumps_write_out_proc_statics(FILE *, FILE *);
 	  mercury_sys_init_backjumps_write_out_proc_statics(deep_fp, procrep_fp); }
+	{ extern void mercury_sys_init_exceptions_write_out_proc_statics(FILE *, FILE *);
+	  mercury_sys_init_exceptions_write_out_proc_statics(deep_fp, procrep_fp); }
 }
 
 static void write_out_proc_statics_3(FILE *deep_fp, FILE *procrep_fp)
 {
-	{ extern void mercury_sys_init_exceptions_write_out_proc_statics(FILE *, FILE *);
-	  mercury_sys_init_exceptions_write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury_sys_init_par_builtin_modules_write_out_proc_statics(FILE *, FILE *);
 	  mercury_sys_init_par_builtin_modules_write_out_proc_statics(deep_fp, procrep_fp); }
 	{ extern void mercury_sys_init_lc_write_out_proc_statics(FILE *, FILE *);
@@ -1373,8 +1362,6 @@ static void write_out_proc_statics(FILE *deep_fp, FILE *procrep_fp)
 
 static void init_modules_threadscope_string_table_0(void)
 {
-	{ extern void mercury__grouping__init_threadscope_string_table(void);
-	  mercury__grouping__init_threadscope_string_table(); }
 	{ extern void mercury__sudoku__init_threadscope_string_table(void);
 	  mercury__sudoku__init_threadscope_string_table(); }
 	{ extern void mercury__array__init_threadscope_string_table(void);
@@ -1453,12 +1440,12 @@ static void init_modules_threadscope_string_table_0(void)
 	  mercury__io__init_threadscope_string_table(); }
 	{ extern void mercury__lazy__init_threadscope_string_table(void);
 	  mercury__lazy__init_threadscope_string_table(); }
+	{ extern void mercury__lexer__init_threadscope_string_table(void);
+	  mercury__lexer__init_threadscope_string_table(); }
 }
 
 static void init_modules_threadscope_string_table_1(void)
 {
-	{ extern void mercury__lexer__init_threadscope_string_table(void);
-	  mercury__lexer__init_threadscope_string_table(); }
 	{ extern void mercury__library__init_threadscope_string_table(void);
 	  mercury__library__init_threadscope_string_table(); }
 	{ extern void mercury__list__init_threadscope_string_table(void);
@@ -1537,12 +1524,12 @@ static void init_modules_threadscope_string_table_1(void)
 	  mercury__std_util__init_threadscope_string_table(); }
 	{ extern void mercury__stm_builtin__init_threadscope_string_table(void);
 	  mercury__stm_builtin__init_threadscope_string_table(); }
+	{ extern void mercury__store__init_threadscope_string_table(void);
+	  mercury__store__init_threadscope_string_table(); }
 }
 
 static void init_modules_threadscope_string_table_2(void)
 {
-	{ extern void mercury__store__init_threadscope_string_table(void);
-	  mercury__store__init_threadscope_string_table(); }
 	{ extern void mercury__stream__init_threadscope_string_table(void);
 	  mercury__stream__init_threadscope_string_table(); }
 	{ extern void mercury__stream__string_writer__init_threadscope_string_table(void);
