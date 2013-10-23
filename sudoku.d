@@ -9,6 +9,7 @@ sudoku.optdate sudoku.trans_opt_date sudoku.err sudoku.c_date sudoku.s_date sudo
 	map.int \
 	private_builtin.int \
 	set.int \
+	string.int \
 	array.int2 \
 	assoc_list.int2 \
 	bitmap.int2 \
@@ -24,7 +25,6 @@ sudoku.optdate sudoku.trans_opt_date sudoku.err sudoku.c_date sudoku.s_date sudo
 	rtti_implementation.int2 \
 	set_ordlist.int2 \
 	stream.int2 \
-	string.int2 \
 	term.int2 \
 	time.int2 \
 	tree234.int2 \
@@ -86,6 +86,7 @@ sudoku.date sudoku.date0 : sudoku.m \
 	map.int3 \
 	private_builtin.int3 \
 	set.int3 \
+	string.int3 \
 	array.int3 \
 	assoc_list.int3 \
 	bitmap.int3 \
@@ -101,7 +102,6 @@ sudoku.date sudoku.date0 : sudoku.m \
 	rtti_implementation.int3 \
 	set_ordlist.int3 \
 	stream.int3 \
-	string.int3 \
 	term.int3 \
 	time.int3 \
 	tree234.int3 \
@@ -117,6 +117,7 @@ sudoku.date0 : sudoku.m \
 	map.int3 \
 	private_builtin.int3 \
 	set.int3 \
+	string.int3 \
 	array.int3 \
 	assoc_list.int3 \
 	bitmap.int3 \
@@ -132,7 +133,6 @@ sudoku.date0 : sudoku.m \
 	rtti_implementation.int3 \
 	set_ordlist.int3 \
 	stream.int3 \
-	string.int3 \
 	term.int3 \
 	time.int3 \
 	tree234.int3 \
