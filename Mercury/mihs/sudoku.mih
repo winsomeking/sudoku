@@ -40,6 +40,38 @@ extern "C" {
 #line 41 "Mercury/mihs/sudoku.mih.tmp"
 extern const MR_TypeCtorInfo_Struct sudoku__sudoku__type_ctor_info_cell_0;
 
+#line 16 "sudoku.m"
+void MR_CALL 
+sudoku__ungroup_list_5_p_0(
+#line 16 "sudoku.m"
+  MR_Word sudoku__param_1,
+#line 16 "sudoku.m"
+  MR_Integer sudoku__param_2,
+#line 16 "sudoku.m"
+  MR_Integer sudoku__param_3,
+#line 16 "sudoku.m"
+  MR_Integer sudoku__param_4,
+#line 16 "sudoku.m"
+  MR_Word * sudoku__param_5,
+#line 16 "sudoku.m"
+  MR_Word sudoku__param_6);
+
+#line 13 "sudoku.m"
+void MR_CALL 
+sudoku__group_list_5_p_0(
+#line 13 "sudoku.m"
+  MR_Word sudoku__param_1,
+#line 13 "sudoku.m"
+  MR_Integer sudoku__param_2,
+#line 13 "sudoku.m"
+  MR_Integer sudoku__param_3,
+#line 13 "sudoku.m"
+  MR_Integer sudoku__param_4,
+#line 13 "sudoku.m"
+  MR_Word sudoku__param_5,
+#line 13 "sudoku.m"
+  MR_Word * sudoku__param_6);
+
 #line 9 "sudoku.m"
 void MR_CALL 
 main_2_p_0(void);

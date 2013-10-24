@@ -288,27 +288,38 @@ load_puzzle(Puzzle, !IO) :-
 
 solve_puzzle(Puzzle,ProcessedPuzzle) :- 
       (  
-         findAndUpdate_cells_haveOnePossibleValue(0,Puzzle,ProcessedPuzzle)
-         %list.contains(ProcessedPuzzle0,-1)
-         %-> ProcessedPuzzle = ProcessedPuzzle0
-         % Hard sudoku questions, have to make a guess first.
-         %; ProcessedPuzzle = ProcessedPuzzle0
-           
-            %%%%%%%%%%%%%%%%%% Stage 2 
-            %get_cell_withFewestPossibleValue(ProcessedPuzzle,LuckyCell),
-            %get_aPossibleValue_ofCell(ProcessedPuzzle,LuckyCell,Value),
-            %UpdatedCell = LuckCell ^ value := Value,
-            %ungroup_list(1,2,3,Puzzle1,ProcessedPuzzle),
-            % FIX ME: update the Puzzle1 list at cell.index with cell.value.
-            % Applying the simple strategy on this updated puzzle-Puzzle2.
+        if findAndUpdate_cells_haveOnePossibleValue(0,0,Puzzle,ProcessedPuzzle1)
+        then ProcessedPuzzle = ProcessedPuzzle1
+        else %%%%%%%% BackTracking code.
+            (makeAGuess_updatePuzzle(Puzzle, UpdatedPuzzle1),
+             findAndUpdate_cells_haveOnePossibleValue(0,0,UpdatedPuzzle1,ProcessedPuzzle)
+            )
+       ).
 
-            % Recusive call to solve_puzzle or use backtracking
-            % FIX ME: NOTE: the back tracking stuff would happen at here.
-            %% solve_puzzle(Puzzle2,SolvedPuzzle),
-            %findAndUpdate_cells_haveOnePossibleValue(GroupedPuzzle,ProcessedPuzzle,Succeed),
-	        %Succeed = 1
-	        %-> solve_puzzle (Puzzle,ProcessedPuzzle)
-	        %; false % explicitly failing.
+:- pred makeAGuess_updatePuzzle(list(int)::in, list(int)::out) is nondet
+
+makeAGuess_updatePuzzle(Puzzle, UpdatedPuzzle) :-
+       (
+          cell_least_possibleValue(Puzzle,index),
+          getAPossibleValueForCell(Puzzle,index,aPossibleValue),
+          list.replace_nth(Puzzle,index+1,aPossibleValue,UpdatedPuzzle1),
+          UpdatedPuzzle = UpdatedPuzzle1 
+       ).
+
+:- getAPossibleValueForCell(list(int)::in,int::in, int::out) is nondet
+
+getAPossibleValueForCell :-
+       (
+           
+       ).
+
+
+:- pred cell_least_possibleValue(list(int)::in,int::out ) is det
+
+cell_least_possibleValue :-
+       (
+
+
        ).
 
 
@@ -323,25 +334,35 @@ removeUsedValues(InputList, OutputList) :-
          list.delete_elems(FullList,InputList,OutputList).
         
         
-:- pred findAndUpdate_cells_haveOnePossibleValue(int::in,list(int)::in, list(int)::out) is semidet.
+:- pred findAndUpdate_cells_haveOnePossibleValue(int::in,int::in,list(int)::in, list(int)::out) is semidet.
 
 %  Try to find and update all the cells from index 0 in the puzzle list who could have only one possible value, 
 %  Update that cell and do this recursively until no cells could be updated.
 %  If found a cell, then the value field of the cell will be udpated, otherwise not.
 %  The last out parameter indicates whether updated all the cells or not. 0 means no. 1 mean yes.
 
-findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle) :-
+findAndUpdate_cells_haveOnePossibleValue(CellIndex,iterationNum,Puzzle,UpdatedPuzzle) :-
       (  
-       	 list.length(Puzzle,PuzzleLen),
-         (if  CellIndex >= PuzzleLen
+
+         list.length(Puzzle,PuzzleLen),
+
+         (if CellIndex >= PuzzleLen
          then
-               UpdatedPuzzle = Puzzle  %findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle)
+               (if list.contains(Puzzle,-1)
+                then 
+                    if iterationNum >= 81
+                    then false
+                    else 
+                        findAndUpdate_cells_haveOnePossibleValue(0,iterationNum + 1,Puzzle,UpdatedPuzzle)
+                else
+                    UpdatedPuzzle = Puzzle  %findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle)
+              )
          else
              list.index0(Puzzle,CellIndex,Value),
 	         (if 
 	             not (Value = -1)
 	         then 
-	              findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,Puzzle,UpdatedPuzzle)
+	              findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,iterationNum,Puzzle,UpdatedPuzzle)
 	         else 
 		         find_allPossibleValues_ofCell(Puzzle,cell(CellIndex,0), PossibleValues),
 		         list.length(PossibleValues,Len),
@@ -349,10 +370,10 @@ findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle) :-
 		         -> ( list.index0(PossibleValues,0,Head),
 		              list.replace_nth(Puzzle,CellIndex+1,Head,UpdatedPuzzle1),
 		              %Puzzle = UpdatedPuzzle1,
-		              findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,UpdatedPuzzle1,UpdatedPuzzle)
+		              findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,iterationNum,UpdatedPuzzle1,UpdatedPuzzle)
 		            )
 		         ;
-		         findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,Puzzle,UpdatedPuzzle)
+		         findAndUpdate_cells_haveOnePossibleValue(CellIndex+1,iterationNum,Puzzle,UpdatedPuzzle)
 		       )
 		  )
        ).
@@ -371,26 +392,6 @@ find_allPossibleValues_ofCell(Puzzle,UnfilledCell,PossibleValues) :-
          removeUsedValues(UsedValueList,PossibleValues)
          %find_allPossibleValues_ofCell(Puzzle,UnfilledCell,PossibleValues)
      ).  
-
-
-
-
-%:- pred get_aPossibleValue_ofCell (list(int)::in,cell::in,int::out) is multi.
-
-%  Return a possible value of an unfilled cell.
-%  Could be used to get a reasonable guess.     
-%  Update the value of the cell from -1 to another value.
-
-%get_aPossibleValue_ofCell(Puzzle,UnfilledCell,A_PossibleValue) :- 
-        %
- 
-%:- pred get_cell_withFewestPossibleValue (list(list(int))::in, cell::out ) is det.
-
-% Find out a cell with fewest possible alternative values
-
-%get_cell_withFewestPossibleValue(Puzzle,LuckyCell) :- 
-
-
 
 
 :- pred return_row_collum_countryOfACell(list(int)::in,int::in,list(int)::out,list(int)::out,list(int)::out) is semidet.

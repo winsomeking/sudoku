@@ -1,5 +1,10 @@
 :- module sudoku.
 :- interface.
 :- import_module io.
+:- import_module list.
+:- pred group_list(int, int, int, list.list(E), list.list(list.list(E))).
+:- mode group_list((builtin.in), (builtin.in), (builtin.in), (builtin.in), (builtin.out)) is det.
 :- pred main(io.io, io.io).
 :- mode main((builtin.di), (builtin.uo)) is cc_multi.
+:- pred ungroup_list(int, int, int, list.list(E), list.list(list.list(E))).
+:- mode ungroup_list((builtin.in), (builtin.in), (builtin.in), (builtin.out), (builtin.in)) is det.

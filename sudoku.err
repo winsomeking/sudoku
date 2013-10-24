@@ -1,0 +1,7 @@
+sudoku.m:14:1: error: conflicting types for 'sudoku__group_list_5_p_0'
+sudoku__group_list_5_p_0(
+^
+sudoku.m:367:7: note: previous implicit declaration is here
+      sudoku__group_list_5_p_0(sudoku__TypeCtorInfo_42_52, sudoku__V_30_30, sudoku__V_31_31, sudoku__V_32_32, sudoku__Puzzle_4, &sudoku__CountryList_21);
+      ^
+1 error generated.
