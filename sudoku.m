@@ -296,30 +296,66 @@ solve_puzzle(Puzzle,ProcessedPuzzle) :-
             )
        ).
 
-:- pred makeAGuess_updatePuzzle(list(int)::in, list(int)::out) is nondet
+:- pred makeAGuess_updatePuzzle(list(int)::in, list(int)::out) is nondet.
 
 makeAGuess_updatePuzzle(Puzzle, UpdatedPuzzle) :-
        (
-          cell_least_possibleValue(Puzzle,index),
-          getAPossibleValueForCell(Puzzle,index,aPossibleValue),
-          list.replace_nth(Puzzle,index+1,aPossibleValue,UpdatedPuzzle1),
+          cell_least_possibleValue(0,10,Puzzle,Index),
+          getAPossibleValueForCell(Puzzle,Index,APossibleValue),
+          list.replace_nth(Puzzle,Index+1,APossibleValue,UpdatedPuzzle1),
           UpdatedPuzzle = UpdatedPuzzle1 
        ).
 
-:- getAPossibleValueForCell(list(int)::in,int::in, int::out) is nondet
+:- pred getAPossibleValueForCell(list(int)::in,int::in, int::out) is nondet.
 
-getAPossibleValueForCell :-
+getAPossibleValueForCell(Puzzle,Index,Result) :-
        (
-           
+           find_allPossibleValues_ofCell(Puzzle,Cell(Index,0),Values),
+           (
+            Result = list.head(Values);
+            list.drop(1,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(2,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(3,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(4,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(5,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(6,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(7,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+            list.drop(8,Values,NewValues),
+            Result = list.head(list.drop(1,NewValues));
+        
+           )
        ).
 
 
-:- pred cell_least_possibleValue(list(int)::in,int::out ) is det
+:- pred cell_least_possibleValue(int::in,int::in,list(int)::in, int::out ) is det.
 
-cell_least_possibleValue :-
+cell_least_possibleValue(TempIndex,TempCount,Puzzle,Index) :-
        (
-
-
+           % Start searching from index 0
+           if TempIndex >= 81
+           then   Index = TempIndex
+           else
+               (list.index0(Puzzle,TempIndex,Value),
+               if Value = -1
+               then (find_allPossibleValues_ofCell(Puzzle,Cell(TempIndex,0),Values),
+                      if list.length(Values) <= TempCount
+                      then (NewCount = list.length(Values),
+                            NewIndex = TempIndex,
+                            cell_least_possibleValue(NewIndex,NewCount,Puzzle,Index)
+                           )
+                      else
+                          cell_least_possibleValue(TempIndex+1,TempCount,Puzzle,Index)
+                    )
+               else
+                   cell_least_possibleValue(TempIndex+1,TempCount,Puzzle,Index)
+               )
        ).
 
 
@@ -350,10 +386,11 @@ findAndUpdate_cells_haveOnePossibleValue(CellIndex,iterationNum,Puzzle,UpdatedPu
          then
                (if list.contains(Puzzle,-1)
                 then 
-                    if iterationNum >= 81
-                    then false
-                    else 
+                   ( if iterationNum >= 81
+                     then false
+                     else
                         findAndUpdate_cells_haveOnePossibleValue(0,iterationNum + 1,Puzzle,UpdatedPuzzle)
+                   )
                 else
                     UpdatedPuzzle = Puzzle  %findAndUpdate_cells_haveOnePossibleValue(CellIndex,Puzzle,UpdatedPuzzle)
               )
